@@ -24,7 +24,9 @@ Tutorial git par le service informatique du LPC
 
 ## Travail à 2/3 sur un fichier python, résolution des conflits et merge des branches (40 min): FJ (mais pas tout seul)
 
-## Utilisation d'une commande avancée: rebase (ou autre) (20 min): FJ
+## Utilisation d'une commande avancée: rebase (ou autre)
+
+> (20 min): FJ
 
 http://code.tutsplus.com/tutorials/rewriting-history-with-git-rebase--cms-23191
 
