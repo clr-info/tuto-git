@@ -9,6 +9,8 @@ Tutorial git par le service informatique du LPC
 > (10 min): FJ
 
   https://guides.github.com/introduction/flow
+  ou encore:
+  https://fr.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow
 
 # TP initiation (1H)
   - Commandes de bases: clone, checkout, commit, add, push
