@@ -4,6 +4,7 @@ Tutorial git par le service informatique du LPC
 - Cours (1H)
   - Présentation de git (50 min)
   - Exemple d'un workflow simple (10 min): FJ
+    https://fr.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow
 - TP initiation (1H)
   - Commandes de bases: clone, checkout, commit, add, push
     en python
