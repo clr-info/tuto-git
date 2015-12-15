@@ -17,6 +17,8 @@ Tutorial git par le service informatique du LPC
 Example en mercurial, pouvant être adapté:
 http://informatique-lpc.in2p3.fr/jdev/tp_dvcs/_build/html
 
+(source: http://informatique-lpc.in2p3.fr/jdev/tp_dvcs/_build/html/)
+
   - Commandes de bases: clone, checkout, commit, add, push
     en python
   - Le .gitignore
@@ -33,4 +35,7 @@ http://informatique-lpc.in2p3.fr/jdev/tp_dvcs/_build/html
 > (20 min): FJ
 
 http://code.tutsplus.com/tutorials/rewriting-history-with-git-rebase--cms-23191
+
+# Références
+http://ericsink.com/vcbe
 
