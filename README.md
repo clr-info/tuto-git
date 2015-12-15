@@ -24,7 +24,7 @@ Tutorial git par le service informatique du LPC
 
 ## Travail à 2/3 sur un fichier python, résolution des conflits et merge des branches (40 min): FJ (mais pas tout seul)
 
-## Utilisation d'une commande avancée: rebase ou comment changer le passé
+## Exemple avancé: *rebase* ou comment changer le passé
 
 > (20 min): FJ
 
