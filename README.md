@@ -13,6 +13,10 @@ Tutorial git par le service informatique du LPC
   https://fr.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow
 
 # TP initiation (1H)
+
+Example en mercurial, pouvant être adapté:
+http://informatique-lpc.in2p3.fr/jdev/tp_dvcs/_build/html
+
   - Commandes de bases: clone, checkout, commit, add, push
     en python
   - Le .gitignore
