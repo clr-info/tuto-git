@@ -1,0 +1,43 @@
+Git - Installation - Configuration - Initialisation
+2016
+
+LPC
+
+* Installation
+
+* Installation - Windows
+TBD
+- cmder
+- git Windows
+
+* Installation - *nix
+- TBD
+
+* Configuration
+- git config
+    git config --global user.name "John Smith"
+    git config --global user.email john@example.com
+    git config --global core. editor vim
+    git config --global alias.st status
+- le flag --global enregistre les options dans le  ~/.gitconfig = valeur par défaut pour tous les nouveaux repository
+- sinon les options locals du repository <repo>/.git/config
+
+* Initialisation
+
+* Initialisation d'un dépôt Git
+- init
+    git init <path>
+Création d'un dépôt Git dans le répertoire <path>
+Existence d'un dossier .git dans le répertoire <path> qui contient également les fichiers sources du workspace
+
+    git init --bare <path>
+Création d'un dépôt Git serveur dans le répertoire <path>
+Le repository serveur ne contient que le dossier .git pas les fichiers source du workspace
+Par convention les repository serveur prennent l'extension .git : repo.git
+
+- clone
+    git clone <repo-path> <name-directory>
+    // clone le repository <repo-path> dans le répertoire <name-directory> en local
+
+    git clone ssh://<user>@<host>/path/to/repo.git
+    git clone https://otherhost.com/user/repo.git
