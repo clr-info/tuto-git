@@ -35,6 +35,7 @@ Création d'un dépôt Git serveur dans le répertoire <path>
 Le repository serveur ne contient que le dossier .git pas les fichiers source du workspace
 Par convention les repository serveur prennent l'extension .git : repo.git
 
+* Initialisation d'un dépôt Git
 - clone
     git clone <repo-path> <name-directory>
     // clone le repository <repo-path> dans le répertoire <name-directory> en local
