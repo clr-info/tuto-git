@@ -57,3 +57,21 @@ LPC
     # récupération d'un dépôt distant via ssh ou https
     git clone ssh://<user>@<host>/path/to/repo.git
     git clone https://otherhost.com/user/repo.git
+
+* Tout ne doit pas être versionné
+- Fichier *.gitignore*
+    git ignore --help
+
+- Permet de ne pas surveiller certains fichiers, dossiers
+- À la racine du dépôt (portée du dossier conteneur)
+
+    # Exemple .gitignore
+    # ignorer tous les fichiers ayant l’extension pyo ou pyc
+    *.py[oc]
+    # tous les fichiers et dossiers du dossier ./vendor dans le dépôt
+    /vendor/*
+    # les fichiers commençant par ~
+    *~
+
+- Attention aux fichiers *sensibles* (*conf*), inutiles (exécutables...), de tailles importante (documentation, vidéo...)
+- Pour les fichiers de conf (ou autres), il est d'usage de laisser un .dist non renseigné
