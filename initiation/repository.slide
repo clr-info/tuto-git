@@ -1,0 +1,97 @@
+Git - Qu'est-ce qu'un repository
+2016
+
+LPC
+
+* un repository Git
+
+* un repository Git
+Un repository Git contient 3 zones
+
+- The working directory (working tree ou working copy)
+- The staging area (index ou cache)
+- Committed history (historique de projet)
+
+Remarques :
+
+- Un repository git est associé à un répertoire projet
+- Importance du pattern *edit/stage/commit* et des états modifié/indexé/validé
+
+* The working directory (working tree ou working copy)
+
+- Pattern *edit* *(modifié)* /stage/commit
+- Répertoire de travail qui contient la version courante des fichiers utilisés et/ou édités dans le projet
+.image gfx/initiation-repository-working-tree.png
+- Le répertoire de travail est une extraction unique d’une version du projet. Ces fichiers sont extraits depuis la base de données compressée dans le répertoire .git et placés sur le disque pour pouvoir être utilisés ou modifiés.
+
+* The staging area (index ou cache)
+
+- Pattern edit/ *stage* *(indexé)* /commit
+- Une particularité de Git
+- Zone de préparation, pas encore historisée dans le projet, entre le Working Directory et l'historique des commit
+- Permet de préparer ce que l'on veut historiser (notion d'atomicité, de cohérence des commit). Indexer une ressource c'est dire que l'on voudra historiser celle-ci
+- Ajouter un fichier (initial ou modifié) du Working directory à la zone d'index  se fait au moyen de la commande *git* *add*
+- TODO : git rm
+.image gfx/initiation-repository-stage.png
+
+* Historique du projet
+
+- Pattern edit/stage/ *commit* *(validé)*
+- Succession des révisions sauvegardées du projet
+- Le projet est *Local*
+- Un commit est un instantané de l'historique du projet; renseigné par qui l'a produit, une date et un message explicatif. Il possède une identifiant unique (Hash)
+- Pour ajouter un instantané dans le projet, c'est-à-dire passer un ensemble de ressources indexées dans l'historique, on utilise la commande *git* *commit*
+.image gfx/initiation-repository-commit.png
+
+* Les 3 zones
+.image gfx/initiation-repository-les-3-etats.png
+- *git* *add* : indexer une/des ressources pour préparer le commit
+- *git* *commit* : historiser ce que l'on a indexé
+- *git* *checkout* : extraire une version de l'historique dans le répertoire de travail  
+
+* Inspecter un repository
+
+* Les états des fichiers
+
+- *git* *status* : permet de voir l'état des fichiers du projet (non versionné, modifié, staged, non modifié)
+.image gfx/initiation-repository-les-etats-status.png
+
+* Voir les différences de fichiers entre les zones
+
+- *git* *diff* : différence entre le working directory et l'index. Ce qui n'est pas préparé à être commit
+- *git* *diff* *--cached* : différence entre l'index et le plus récent des commit. Ce qui est préparé à être commité.
+- *git* *diff* *HEAD* : différence entre le working directory et le plus récent des commit
+
+- l'option --stat est intéressante pour voir des statistiques de modification par dossier (pratique pour voir les ajouts d'images notamment)
+
+* Inspecter l'historique du projet
+
+- *git* *log* : liste les commit dans l'ordre chronologique avec leurs informations (Commit Hash, nom, e-mail de l'auteur, le message de commit)
+- *git* *log* *-p*: affiche les modifications associés au commit
+- *git* *log* *--oneline* : affiche seulement la première ligne des commit
+
+* Annuler des modifications
+
+* Annuler des modifications sur des fichiers (titre?)
+
+- *git* *reset* *--* *file* : supprime file de l'index, le WD n'est pas affecté
+- *git* *checkout* *--* *file* : supprimer les modifications du WD, le WD prend l'état de l'index
+- *git* *checkout* *HEAD* *--* *file* : supprime les changements en WD et en index (= pour ce fichier remettre l'index et le WD dans l'état du dernier commit)
+.image gfx/initiation-repository-annule-modif-fichier.png
+
+* Annuler des modifications sur tout le projet
+
+- git reset : vider l'index
+- git reset --hard : remet l'index et le WD dans l'état du dernier commit
+
+* Retrouver une version historisée
+
+- *git* *checkout* *<commit>* *file* : permet de copier le fichier de historique à l'instantanée <commit> dans le WD et l'index. Il est possible de modifier ce fichier et commiter ces changements.
+- *git* *checkout* *HEAD* *file* : pour revenir à la version du dernier commit
+- *git* *checkout* *<commit>* : sans mentionner de fichier permet de faire revenir tout le projet à l'état dans lequel il se trouvait lors du <commit>. Ceci permet de voir, compiler, tester, etc... le code dans cet état, mais rien ne pourra être sauvegardé dans l'historique.
+- *git* *checkout* *master* : permet de revenir à l'état le plus récent de l'historique (approximation)
+
+* Annuler un commit
+
+- retour d'un fichier à une version antérieure: git checkout 03b20ba test1.txt vs git checkout HEAD test1.txt
+- git revert
