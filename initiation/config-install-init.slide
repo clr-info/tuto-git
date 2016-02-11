@@ -45,7 +45,7 @@ LPC
 - Création d'un *dépôt* *git* dans le répertoire <path>
 - Existence d'un dossier *.git* dans le répertoire <path> qui contient également les fichiers source du workspace
     git init --bare <path>
-- Création d'un *dépôt* *Git* *"serveur"* dans le répertoire <path>
+- Création d'un *dépôt* *Git* *central*, *partagé*, *"serveur"* dans le répertoire <path>
 - Le repository serveur ne contient que le dossier .git pas les fichiers source du workspace
 - Par convention les repository serveur prennent l'extension .git : *repo.git*
 
