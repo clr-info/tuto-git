@@ -1,0 +1,103 @@
+Git - Annuler des modifications
+2016
+
+LPC
+
+* Annuler des modifications non historisées
+
+* Annuler des modifications sur un fichier
+
+- *git* *reset* *--* *file* : supprime file de l'index, le WD n'est pas affecté
+- *git* *checkout* *--* *file* : supprimer les modifications du WD, le WD prend l'état de l'index
+- *git* *checkout* *HEAD* *--* *file* : supprime les changements en WD et en index (= pour ce fichier remettre l'index et le WD dans l'état du dernier commit)
+.image gfx/initiation-repository-annule-modif-fichier.png
+
+* Annuler des modifications sur tout le projet
+
+- *git* *reset* : vider l'index
+- *git* *checkout* *--* *.* : vider le WD
+- *git* *reset* *--hard* : remet l'index et le WD dans l'état du dernier commit
+
+* Retrouver une version historisée
+
+_Pour_un_fichier_
+
+- *git* *checkout* *<commit>* *file* : permet de copier le fichier de l'historique à l'instantanée <commit> dans le WD et l'index. Il est possible de modifier ce fichier et commiter ces changements.
+- *git* *checkout* *HEAD* *file* : pour revenir à la version du dernier commit
+
+_Pour_le_projet_
+
+- *git* *checkout* *<commit>* : sans mentionner de fichier permet de faire revenir tout le projet à l'état dans lequel il se trouvait lors du <commit>. Ceci permet de voir, compiler, tester, etc... le code dans cet état, mais rien ne pourra être sauvegardé dans l'historique. 
+- *git* *checkout* *master* : pour revenir à l'état le plus récent de l'historique (approximation)
+
+* Annuler l'historique
+
+* Repository local vs repository distant
+
+.image gfx/initiation-undo-care.png
+Modifier son historique en local se fait sans risque mais modifier un historique issu d'un repository public, publié, partagé entre plusieurs personnes est dangereux. Il est vivement déconseillé de le faire sous peine de conflit très probable.
+.image gfx/initiation-undo-public-vs-local.png
+Pour un repository public, il est préférable de créer un commit qui annule le dernier commit.
+
+* git amend
+
+- Permet de changer le dernier commit (réécrire le message ou ajouter des éléments nouvellement présents dans l'index)
+- Création d'un nouveau commit et suppression de l'ancien
+
+  git add toto.txt
+  git commit -m"ajout de toto.txt"
+  
+  git log --oneline
+  fb84e37 ajout de toto.txt
+
+  vim titi.txt
+  vim toto.txt
+  git add .
+  git commit --amend
+  
+  git log --oneline
+  f73ced3 ajout de toto.txt et titi.txt
+
+* git revert <commit>
+
+- Annule un commit donné
+- Créé un nouveau commit qui annule les changements du commit
+- Moyen acceptable (?) d'annuler un commit que l'on a publié
+
+  git revert f73ced3
+
+  git log --oneline
+  2a44c68 Revert "ajout de toto.txt et titi.txt"
+  f73ced3 ajout de toto.txt et titi.txt
+
+* git reset <commit>
+
+- supprime un/des commit
+- ne doit *JAMAIS* se faire sur un repository publié mais peut être pratique en local pour réorganiser son historique ou supprimer un travail à abandonner complètement avant de publier ses commit locaux
+- l'index est mis à jour pour correspondre au <commit>, avec reset sans option, le WD reste à l'état du dernier commit 
+.image gfx/initiation-undo-reset.png
+
+* git reset <commit>
+
+  vim tutu.txt
+  git commit -am"ajout de tutu.txt"
+  echo "texte non pertinent 1" >> tutu.txt
+  git commit -am "texte non pertinent 1 dans tutu.txt"
+  echo "texte non pertinent 2" >> tutu.txt
+  git commit -am "texte non pertinent 2 dans tutu.txt"
+  
+  git log --oneline
+  3cf31a6 texte non pertinent 2 dans tutu.txt
+  dfee1ed texte non pertinent 1 dans tutu.txt
+  bb33e32 Ajout de tutu.txt
+  
+  git reset bb33e32
+  # git reset HEAD~2 serait équivalent
+  git log --oneline
+  bb33e32 Ajout de tutu.txt
+  
+  # l'index est vide mais le contenu des 2 commit supprimés est toujours présent en WD 
+  cat tutu.txt
+  tutu
+  "texte non pertinent 1"
+  "texte non pertinent 2"
