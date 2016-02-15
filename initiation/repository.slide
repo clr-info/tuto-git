@@ -31,7 +31,7 @@ Remarques :
 - Zone de préparation, pas encore historisée dans le projet, entre le Working Directory et l'historique des commit
 - Permet de préparer ce que l'on veut historiser (notion d'atomicité, de cohérence des commit). Indexer une ressource c'est dire que l'on voudra historiser celle-ci
 - Ajouter un fichier (initial ou modifié) du Working directory à la zone d'index  se fait au moyen de la commande *git* *add*
-- TODO : git rm
+- *git*rm*file* : permet de ne plus suivre file et de le supprimer du WD
 .image gfx/initiation-repository-stage.png
 
 * Historique du projet
@@ -49,11 +49,45 @@ Remarques :
 - *git* *commit* : historiser ce que l'on a indexé
 - *git* *checkout* : extraire une version de l'historique dans le répertoire de travail  
 
-* Inspecter un repository
+* L'historique en détail
+
+* Éléments liés à l'historique
+
+- l'historique est une succession de commit où chaque commit possède un ou plusieurs parents
+- *branche* : référence sur le dernier commit d'un "contexte de développement"
+- *master* : représente la branche principale (nom donné par défaut par Git)
+- *HEAD* : référence vers le commit extrait dans le WD. Lorsque HEAD ne pointe pas sur le dernier commit d'une branche, il est dit "detached HEAD"
+- Notation HEAD~ désigne le premier parent à partir du HEAD, HEAD~2 le premier parent du premier parent...
+- idem pour master~ et master~2 mais à partir du dernier commit de la branche master
+
+* Représentation de l'historique
+
+.image gfx/initiation-repository-HEAD-master.png
+
+* Repository local vs repository distant
+
+* remote repository
+
+- Hébergé sur un serveur et partagé par une équipe. Il ne possède pas de WD.
+- Création d'un repository serveur: *git*init*--bare*
+- *git*remote*add*<name>*<url>* : connexion avec un repository distant
+- *git*remote*-v* : permet de voir ses remote repository
+- *git*remote*rm*<name>* : permet d'effacer sa connexion avec le remote repository
+- Lors d'un *git*clone* un repository remote nommé *origin* est associé automatiquement
+
+* Interagir avec le remote repository
+- *git*push*origin*master* : permet d'injecter ses commit locaux au sein de l'historique du repository distant origin dans sa branche master
+- *git*pull*origin*master* : permet de rapatrier dans sa branche courante, l'historique de la branche master du repository distant origin
+
+* Résumé
+.image gfx/initiation-repository-remote.png
+
+
+* Inspecter un repository local
 
 * Les états des fichiers
 
-- *git* *status* : permet de voir l'état des fichiers du projet (non versionné, modifié, staged, non modifié)
+- *git* *status* : permet de voir l'état des fichiers du projet (non versionné, non modifié, modifié, staged)
 .image gfx/initiation-repository-les-etats-status.png
 
 * Voir les différences de fichiers entre les zones
@@ -69,29 +103,3 @@ Remarques :
 - *git* *log* : liste les commit dans l'ordre chronologique avec leurs informations (Commit Hash, nom, e-mail de l'auteur, le message de commit)
 - *git* *log* *-p*: affiche les modifications associés au commit
 - *git* *log* *--oneline* : affiche seulement la première ligne des commit
-
-* Annuler des modifications
-
-* Annuler des modifications sur des fichiers (titre?)
-
-- *git* *reset* *--* *file* : supprime file de l'index, le WD n'est pas affecté
-- *git* *checkout* *--* *file* : supprimer les modifications du WD, le WD prend l'état de l'index
-- *git* *checkout* *HEAD* *--* *file* : supprime les changements en WD et en index (= pour ce fichier remettre l'index et le WD dans l'état du dernier commit)
-.image gfx/initiation-repository-annule-modif-fichier.png
-
-* Annuler des modifications sur tout le projet
-
-- git reset : vider l'index
-- git reset --hard : remet l'index et le WD dans l'état du dernier commit
-
-* Retrouver une version historisée
-
-- *git* *checkout* *<commit>* *file* : permet de copier le fichier de historique à l'instantanée <commit> dans le WD et l'index. Il est possible de modifier ce fichier et commiter ces changements.
-- *git* *checkout* *HEAD* *file* : pour revenir à la version du dernier commit
-- *git* *checkout* *<commit>* : sans mentionner de fichier permet de faire revenir tout le projet à l'état dans lequel il se trouvait lors du <commit>. Ceci permet de voir, compiler, tester, etc... le code dans cet état, mais rien ne pourra être sauvegardé dans l'historique.
-- *git* *checkout* *master* : permet de revenir à l'état le plus récent de l'historique (approximation)
-
-* Annuler un commit
-
-- retour d'un fichier à une version antérieure: git checkout 03b20ba test1.txt vs git checkout HEAD test1.txt
-- git revert
