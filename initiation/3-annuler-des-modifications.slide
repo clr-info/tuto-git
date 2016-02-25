@@ -1,3 +1,5 @@
+Git initiation 3
+
 Git - Annuler des modifications
 2016
 
@@ -44,18 +46,18 @@ Pour un repository public, il est préférable de créer un commit qui annule le
 - Permet de changer le dernier commit (réécrire le message ou ajouter des éléments nouvellement présents dans l'index)
 - Création d'un nouveau commit et suppression de l'ancien
 
-  git add toto.txt
-  git commit -m"ajout de toto.txt"
+  $ git add toto.txt
+  $ git commit -m"ajout de toto.txt"
   
-  git log --oneline
+  $ git log --oneline
   fb84e37 ajout de toto.txt
 
-  vim titi.txt
-  vim toto.txt
-  git add .
-  git commit --amend
+  $ vim titi.txt
+  $ vim toto.txt
+  $ git add .
+  $ git commit --amend
   
-  git log --oneline
+  $ git log --oneline
   f73ced3 ajout de toto.txt et titi.txt
 
 * git revert <commit>
@@ -64,9 +66,9 @@ Pour un repository public, il est préférable de créer un commit qui annule le
 - Créé un nouveau commit qui annule les changements du commit
 - Moyen acceptable (?) d'annuler un commit que l'on a publié
 
-  git revert f73ced3
+  $ git revert f73ced3
 
-  git log --oneline
+  $ git log --oneline
   2a44c68 Revert "ajout de toto.txt et titi.txt"
   f73ced3 ajout de toto.txt et titi.txt
 
@@ -79,25 +81,25 @@ Pour un repository public, il est préférable de créer un commit qui annule le
 
 * git reset <commit>
 
-  vim tutu.txt
-  git commit -am"ajout de tutu.txt"
-  echo "texte non pertinent 1" >> tutu.txt
-  git commit -am "texte non pertinent 1 dans tutu.txt"
-  echo "texte non pertinent 2" >> tutu.txt
-  git commit -am "texte non pertinent 2 dans tutu.txt"
+  $ vim tutu.txt
+  $ git commit -am"ajout de tutu.txt"
+  $ echo "texte non pertinent 1" >> tutu.txt
+  $ git commit -am "texte non pertinent 1 dans tutu.txt"
+  $ echo "texte non pertinent 2" >> tutu.txt
+  $ git commit -am "texte non pertinent 2 dans tutu.txt"
   
-  git log --oneline
+  $ git log --oneline
   3cf31a6 texte non pertinent 2 dans tutu.txt
   dfee1ed texte non pertinent 1 dans tutu.txt
   bb33e32 Ajout de tutu.txt
   
-  git reset bb33e32
+  $ git reset bb33e32
   # git reset HEAD~2 serait équivalent
-  git log --oneline
+  $ git log --oneline
   bb33e32 Ajout de tutu.txt
   
   # l'index est vide mais le contenu des 2 commit supprimés est toujours présent en WD 
-  cat tutu.txt
+  $ cat tutu.txt
   tutu
   "texte non pertinent 1"
   "texte non pertinent 2"
