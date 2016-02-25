@@ -1,3 +1,5 @@
+Git initiation 2
+
 Git - Qu'est-ce qu'un repository
 2016
 
@@ -5,8 +7,8 @@ LPC
 
 * un repository Git
 
-* un repository Git
-Un repository Git contient 3 zones
+* Un repository Git
+contient 3 zones
 
 - The working directory (working tree ou working copy)
 - The staging area (index ou cache)
@@ -15,6 +17,7 @@ Un repository Git contient 3 zones
 Remarques :
 
 - Un repository git est associé à un répertoire projet
+- Existence de *branches* associées à l'historique du repository
 - Importance du pattern *edit/stage/commit* et des états modifié/indexé/validé
 
 * The working directory (working tree ou working copy)
@@ -22,7 +25,7 @@ Remarques :
 - Pattern *edit* *(modifié)* /stage/commit
 - Répertoire de travail qui contient la version courante des fichiers utilisés et/ou édités dans le projet
 .image gfx/initiation-repository-working-tree.png
-- Le répertoire de travail est une extraction unique d’une version du projet. Ces fichiers sont extraits depuis la base de données compressée dans le répertoire .git et placés sur le disque pour pouvoir être utilisés ou modifiés.
+- Le répertoire de travail est une extraction unique d’une version du projet. Ces fichiers sont extraits depuis la base de données compressée dans le répertoire `.git` et placés sur le disque pour pouvoir être utilisés ou modifiés.
 
 * The staging area (index ou cache)
 
@@ -31,7 +34,7 @@ Remarques :
 - Zone de préparation, pas encore historisée dans le projet, entre le Working Directory et l'historique des commit
 - Permet de préparer ce que l'on veut historiser (notion d'atomicité, de cohérence des commit). Indexer une ressource c'est dire que l'on voudra historiser celle-ci
 - Ajouter un fichier (initial ou modifié) du Working directory à la zone d'index  se fait au moyen de la commande *git* *add*
-- *git*rm*file* : permet de ne plus suivre file et de le supprimer du WD
+- *git*rm*file* : permet de ne plus suivre file et de le supprimer du WD 
 .image gfx/initiation-repository-stage.png
 
 * Historique du projet
@@ -40,7 +43,7 @@ Remarques :
 - Succession des révisions sauvegardées du projet
 - Le projet est *Local*
 - Un commit est un instantané de l'historique du projet; renseigné par qui l'a produit, une date et un message explicatif. Il possède une identifiant unique (Hash)
-- Pour ajouter un instantané dans le projet, c'est-à-dire passer un ensemble de ressources indexées dans l'historique, on utilise la commande *git* *commit*
+- Pour ajouter un instantané dans le projet, c'est-à-dire enregistrer un ensemble de ressources indexées dans l'historique, on utilise la commande *git* *commit*
 .image gfx/initiation-repository-commit.png
 
 * Les 3 zones
@@ -49,9 +52,9 @@ Remarques :
 - *git* *commit* : historiser ce que l'on a indexé
 - *git* *checkout* : extraire une version de l'historique dans le répertoire de travail  
 
-* L'historique en détail
+* L'historique en détail 
 
-* Éléments liés à l'historique
+* Éléments liés à l'historique 
 
 - l'historique est une succession de commit où chaque commit possède un ou plusieurs parents
 - *branche* : référence sur le dernier commit d'un "contexte de développement"
@@ -60,9 +63,42 @@ Remarques :
 - Notation HEAD~ désigne le premier parent à partir du HEAD, HEAD~2 le premier parent du premier parent...
 - idem pour master~ et master~2 mais à partir du dernier commit de la branche master
 
-* Représentation de l'historique
+* Représentation de l'historique 
 
 .image gfx/initiation-repository-HEAD-master.png
+
+* Une branche
+
+- est un pointeur sur un commit
+- est une dérivation de la ligne principale de développement (test, nouvelle fonctionnalité, bugfix...)
+
+  # cree une branche
+  $ git branch bugfix234
+
+  # liste les branches du repository
+  # * donne la branche courante
+  $ git branch -v
+
+  # 'va' dans la branche bugfix234
+  $ git checkout bugfix234
+  # les WD/index/history sont maintenant spécifiques a la branche bugfix234
+  # les modifications seront propres a bugfix234 et n altereront pas les autres branches
+
+  # supprime la branche <name>
+  $ git branch -d <name>
+
+* Fusionner des branches
+
+- *git*merge*: intègre les commit d'une branche dans une autre
+
+  # merge la branche bugfix234 dans la branche courante
+  $ git checkout master
+  $ git merge bugfix234
+
+- merge Fast-Forward
+.image gfx/initiation-repository-merge-ff.png
+- 3-Way Merges
+.image gfx/initiation-repository-merge-3-ways.png
 
 * Repository local vs repository distant
 
@@ -76,8 +112,8 @@ Remarques :
 - Lors d'un *git*clone* un repository remote nommé *origin* est associé automatiquement
 
 * Interagir avec le remote repository
-- *git*push*origin*master* : permet d'injecter ses commit locaux au sein de l'historique du repository distant origin dans sa branche master
-- *git*pull*origin*master* : permet de rapatrier dans sa branche courante, l'historique de la branche master du repository distant origin
+- *git*push*origin*master* : permet d'injecter ses commit locaux au sein de l'historique du repository distant `origin` dans sa branche `master`
+- *git*pull*origin*master* : permet de rapatrier dans sa branche courante, l'historique de la branche `master` du repository distant `origin`
 
 * Résumé
 .image gfx/initiation-repository-remote.png
@@ -92,11 +128,11 @@ Remarques :
 
 * Voir les différences de fichiers entre les zones
 
-- *git* *diff* : différence entre le working directory et l'index. Ce qui n'est pas préparé à être commit
+- *git* *diff* : différence entre le working directory et l'index. Ce qui n'est pas préparé à être commité
 - *git* *diff* *--cached* : différence entre l'index et le plus récent des commit. Ce qui est préparé à être commité.
 - *git* *diff* *HEAD* : différence entre le working directory et le plus récent des commit
 
-- l'option --stat est intéressante pour voir des statistiques de modification par dossier (pratique pour voir les ajouts d'images notamment)
+- l'option `--stat` est intéressante pour voir des statistiques de modification par dossier (pratique pour voir les ajouts d'images notamment)
 
 * Inspecter l'historique du projet
 
