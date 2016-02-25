@@ -1,0 +1,87 @@
+Git - Tuto 1
+
+Installation - Configuration - Initialisation
+2016
+
+LPC
+
+* Configuration
+
+* Configurer git
+
+- vérifier que git est installé et sa version
+  $ git --version
+
+- Configurer son nom et son email
+  $ git config --global user.name "Votre nom"
+  $ git config --global user.email "votre_email@votredomaine.com"
+
+- Divers
+  $ git config --system core.editor vim
+  $ git config --global alias.st status
+  # lister les options
+  git config --list
+
+- Édition directe de configuration
+  $ git config --global --edit
+  
+* Initialisation
+
+* Initialisation de votre repository
+
+Dans un répertoire de votre choix, créez un repository
+
+  $ git init
+  # presence d un dossier .git
+  $ ls -a
+
+Créez un fichier notes.txt (que l'on va suivre) et un commentaires.txt (non suivi)
+
+  $ echo "les notes a suivre" > notes.txt
+  $ echo "fichier que je ne veux pas suivre" > commentaires.txt
+
+On observe l'état de notre suivi en faisant 
+
+  $ git status
+
+Les 2 fichiers `notes.txt` et `commentaires.txt` sont indiqués non suivis (untracked) mais peuvent l'être potentiellement
+
+* .gitignore
+
+Créez un fichier .gitignore dans votre repository et indiquez ne pas vouloir suivre le fichier commentaires.txt
+
+  $ echo "commentaires.txt" > .gitignore
+  # on regarde l'etat de notre suivi
+  $ git status
+  # commentaires.txt n'est effectivement plus "suivable"
+
+On va valider le fichier .gitignore
+
+  # on indique que l on va suivre ce fichier
+  $ git add .gitignore
+  # on valide ce fichier en historique
+  $ git commit -m"Ajout de .gitignore"
+  # on regarde l'etat de notre suivi
+  $ git status
+
+Validez de la même façon le fichier `notes.txt` puis observez le résultat de cette commande
+
+  $ git log
+
+* Résumé
+
+- configuration
+- initialisation : *git*init*
+- ne pas suivre tous les fichiers : *.gitignore*
+
+Que font les commandes ?
+
+  $ git status
+  $ git log
+
+et
+
+  $ git add
+  $ git commit
+
+Qu'est-ce qu'un repository ?

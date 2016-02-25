@@ -1,0 +1,372 @@
+Git - Tuto 2
+
+Qu'est-ce qu'un repository
+2016
+
+LPC
+
+* Tutoriel 2
+
+- Reprise du tuto 1
+
+  $ ls -a
+  ./  ../  .git/  .gitignore  commentaires.txt  notes.txt
+  
+  $ git status
+  On branch master
+  nothing to commit, working directory clean
+
+  $ git log --oneline
+  88993e9 Ajout de notes.txt
+  a287430 Ajout de .gitignore
+
+- Rôle des 3 zones
+- Valider ses modifications
+- Inspecter l'historique
+
+* Working directory / Staging area / History
+
+*But*:* on va valider un ensemble cohérent de modifications "Salutations" pour les ajouter dans l'historique
+
+- *git*status* permettra de connaître l'état de notre suivi 
+- *git*add* permettra d'ajouter des modifications dans l'index afin de préparer une validation
+
+Éditer ou créer des fichiers c'est agir sur le Working directory
+
+  $ echo 'salut le monde' > salut.txt
+  $ echo 'Je ne salue personne' > toto.txt
+  $ git status
+  # les fichiers salut et toto ne sont pas suivis
+  
+  $ echo 'Salut les gens' >> notes.txt
+  $ git status
+  # le fichier notes est modifié
+
+*  État de notre suivi
+
+- notes.txt qui est suivi est considéré comme modifié
+- salut.txt et toto.txt ne sont pas suivis
+
+  Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   notes.txt
+
+  Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        salut.txt
+        toto.txt
+
+  no changes added to commit (use "git add" and/or "git commit -a")
+
+* Voir les différences entre le WD et l'index
+
+Comparer le résultat des commandes
+
+  $ git diff
+  
+  $ git diff --cached
+  
+- *git*diff* : on a quelque chose de nouveau dans le WD différent de l'index. `salut.txt` n'est pas pris en compte puisqu'il n'a jamais été indexé.
+
+  diff --git a/notes.txt b/notes.txt
+  index c0c4373..431b788 100644
+  --- a/notes.txt
+  +++ b/notes.txt
+  @@ -1 +1,3 @@
+   les notes a suivre
+  +Salut les gens !!!!
+
+- *git*diff*--cached* : rien n'est indexé, préparé pour être validé (=commité)
+
+* Ajouter nos salutations dans l'index 
+
+- *git*add*
+
+  $ git add salut.txt notes.txt
+
+  $ git status
+  On branch master
+  Changes to be committed:
+    (use "git reset HEAD <file>..." to unstage)
+
+        modified:   notes.txt
+        new file:   salut.txt
+
+  Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        toto.txt
+
+* Valider nos salutations dans l'historique
+
+- *git*commit* ouvre l'éditeur configuré par `git`config`--global`core.editor`. Il est d'usage d'écrire sur la première ligne le sujet, de sauter une ligne, puis d'écrire une explication plus détaillée de ce qui a été fait.
+- *git*commit*-m*"commentaire"* : valide directement avec le `commentaire`
+
+.image gfx/initiation-exercice-2-commit-edit.png 450 950
+
+* Inspecter l'historique
+
+- *git*log*
+
+  $ git log --oneline
+  e0ab1b2 tutoriel - tuto 2 - salutations
+  88993e9 Ajout de notes.txt
+  a287430 Ajout de .gitignore
+
+*Variantes...*
+
+- git log <file>
+- git log -p : afficher le patch
+- git log --stat --oneline
+- git log --graph --decorate --oneline --all
+- git log --graph --abbrev-commit --decorate --date=relative --format=format:"%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)" --all
+- les alias c'est bien...
+
+* Travailler avec des branches
+
+*But*
+
+Manipuler des branches et fusionner les modifications dans la branche principale `master` selon les 2 scenarii
+
+- merge _Fast-Forward_
+- merge _3-Way_ (Résolution manuelle de conflit)
+
+* Branche et merge en Fast-Forward
+
+Créez une branche `plan`
+Allez dans cette branche
+Éditez un plan dans `notes.txt`
+
+  PLAN
+  1/ un petit cours
+
+Puis validez les modifications par un commit dans la branche `plan`
+Éditez un deuxième item de plan dans `notes.txt`
+
+  2/ quelques exercices
+  
+Validez les modifications par un commit dans la branche `plan`
+Mergez la branche `plan` avec la branche principale `master`
+
+* Branche et merge en Fast-Forward (Une solution)
+
+  $ git branch plan
+  $ git branch -v
+  $ git checkout plan
+  $ echo -e "\nPLAN\n1/ un petit cours" >> notes.txt
+  $ git status
+  $ git add notes.txt
+  $ git commit -m "Ajout du plan - Partir 1"
+  $ git log --graph --decorate --oneline --all
+  # notez le positionnement de HEAD
+  $ echo -e "\n2/ quelques exercices" >> notes.txt
+  $ git status
+  $ git commit -am "PLAN - Partie 2"
+  $ git log --graph --decorate --oneline --all
+  $ git branch -v
+  $ git checkout master
+  # observez l etat de votre fichier notes.txt
+  $ git branch
+  $ git merge plan
+  # observez l etat de votre fichier notes.txt
+
+* Branche et merge en Fast-Forward (Historique)
+
+  # avant merge  
+  $ git log --graph --decorate --oneline --all
+  * dc7259f (HEAD -> plan) PLAN - Partie 2
+  * a26f4b3 Ajout du plan - Partir 1
+  * e0ab1b2 (master) tutoriel - tuto 2 - salutations
+  * 88993e9 Ajout de notes.txt
+  * a287430 Ajout de .gitignore
+
+  # apres merge
+  # en fast-forward master a avance de 2 commit pour rejoindre plan
+  $ git log --graph --decorate --oneline --all
+  * dc7259f (HEAD -> master, plan) PLAN - Partie 2
+  * a26f4b3 Ajout du plan - Partir 1
+  * e0ab1b2 tutoriel - tuto 2 - salutations
+  * 88993e9 Ajout de notes.txt
+  * a287430 Ajout de .gitignore
+
+* Travailler avec des branches
+
+- Branche et merge en _3-Way_Merges_
+
+Éditez `notes.txt` juste après le plan et commitez dans la branche `master`
+  
+  Suite de la formation, tu sais faire un commit
+
+Créez une branche `cordial` et allez dans cette branche
+Remplacez les salut par des bonjour dans `notes.txt` et `salut.txt`
+Éditez `notes.txt` juste après le plan pour obtenir
+
+  ## Bienvenue dans cette formation Git
+  Suite de la formation, vous savez faire un commit
+
+Commitez dans la branche `cordial`
+Revenez dans la branche master et éditez `notes.txt`
+
+  Suite de la formation, tu sais faire un commit
+  Test d'un merge 3-Way
+  blabla blabla blabla
+
+* Branche et merge en 3-Way
+
+_(suite...)_ 
+Commitez dans la branche master
+Puis mergez master avec la branche cordial
+Votre fichier `notes.txt` après merge sera 
+
+  les notes a suivre
+  Bonjour les gens !!!!
+
+  PLAN
+  1/ un petit cours
+  2/ quelques exercices
+
+  ## Bienvenue dans cette formation Git
+  Suite de la formation, vous savez faire un commit
+
+  Test d'un merge 3-Way
+
+  blabla blabla blabla
+
+Commitez-le
+
+* Branche et merge en 3-Way (Une solution)
+
+  # on cree la branche cordial et on y accede directement
+  $ git checkout -b cordial
+  $ git branch
+  # edit notes.txt et salut.txt
+  $ git status
+  $ git diff
+  $ git commit -am "formation cordiale"
+  
+  $ git log --graph --decorate --oneline --all
+  * 25e84f2 (HEAD -> cordial) formation cordiale
+  * 15399c2 (master) suite formation
+  * dc7259f (plan) PLAN - Partie 2
+  * a26f4b3 Ajout du plan - Partir 1
+  * e0ab1b2 tutoriel - tuto 2 - salutations
+  * 88993e9 Ajout de notes.txt
+  * a287430 Ajout de .gitignore
+  
+  $ git checkout master
+  # edit notes.txt
+  $  git commit -am "suite de la formation"
+  # edit notes.txt
+  $ git commit -am "commit blabla"
+  
+* Branche et merge en 3-Way
+
+  $ git log --graph --decorate --oneline --all
+  * 232cd09 (HEAD -> master) commit blabla
+  * fe7b0aa suite de la formation
+  | * 25e84f2 (cordial) formation cordiale
+  |/
+  * 15399c2 suite formation
+  * dc7259f (plan) PLAN - Partie 2
+  * a26f4b3 Ajout du plan - Partir 1
+  * e0ab1b2 tutoriel - tuto 2 - salutations
+  * 88993e9 Ajout de notes.txt
+  * a287430 Ajout de .gitignore
+  
+  $ git checkout cordial
+  $ git checkout master
+  # observez les changements dans votre WD
+  # puis on merge
+  $ git merge cordial
+  Auto-merging notes.txt
+  CONFLICT (content): Merge conflict in notes.txt
+  Automatic merge failed; fix conflicts and then commit the result.
+  # il faut resoudre le conflit manuellement pour notes.txt
+  
+  # le log ne change pas
+  git log --graph --decorate --oneline --all
+
+* Branche et merge en 3-Way
+
+  $ git status
+  On branch master
+  You have unmerged paths.
+    (fix conflicts and run "git commit")
+
+  Changes to be committed:
+
+          modified:   salut.txt
+
+  Unmerged paths:
+    (use "git add <file>..." to mark resolution)
+
+          both modified:   notes.txt
+
+  Untracked files:
+    (use "git add <file>..." to include in what will be committed)
+
+          toto.txt
+
+- *git*status* nous indique qu'il existe un conflit à résoudre pour `notes.txt`
+- le remplacement de salut par bonjour ne pose pas de problème (stratégie récursive de merge...)
+
+* Branche et merge en 3-Way
+
+- `notes.txt` après le merge
+
+.image gfx/initiation-exercice-2-merge-3-way-conflict.png 350 350
+  
+
+* Branche et merge en 3-Way
+
+  # on edite le fichier notes.txt en resolvant le conflit
+  
+  les notes a suivre
+  Bonjour les gens !!!!
+
+  PLAN
+  1/ un petit cours
+  2/ quelques exercices
+
+  ## Bienvenue dans cette formation Git
+  Suite de la formation, vous savez faire un commit
+
+  Test d'un merge 3-Way
+
+  blabla blabla blabla
+  
+  $ git add notes.txt
+  $ git status
+  $ git commit -m "merge de la branch cordial"
+
+* Branche et merge en 3-Way
+
+  $ git log --graph --decorate --oneline --all
+  *   77b2b06 (HEAD -> master) merge de la branch cordial
+  |\
+  | * 25e84f2 (cordial) formation cordiale
+  * | 232cd09 commit blabla
+  * | fe7b0aa suite de la formation
+  |/
+  * 15399c2 suite formation
+  * dc7259f (plan) PLAN - Partie 2
+  * a26f4b3 Ajout du plan - Partir 1
+  * e0ab1b2 tutoriel - tuto 2 - salutations
+  * 88993e9 Ajout de notes.txt
+  * a287430 Ajout de .gitignore
+
+* Résumé
+
+- Qu'est-ce qu'un repository
+- Les 3 zones (WD / index / historique)
+- L'historique (voir les différences, inspecter, valider)
+- Les branches = dérivations de la branche principale
+- Merge des branches et résolution manuelle de conflit
+
+*La*suite*
+
+- Et le travail en équipe ? _Plusieurs_repository_dont_un_central_
+- Comment corriger son historique *en*local* ?
