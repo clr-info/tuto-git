@@ -1,3 +1,5 @@
+Git initiation 1
+
 Git - Installation - Configuration - Initialisation
 2016
 
@@ -15,52 +17,54 @@ LPC
 
 * Installation
 - version
-    git --version
-    
-- help aka rtfm
-    git help [COMMAND]
+    $ git --version
+
+- help
+    $ git help [COMMAND]
+    $ git help add
+    $ git help status
 
 * Configuration
 
 * Configuration
 - git config
-    # les options name et email doivent être renseignées 
+    # les options name et email doivent être renseignees 
     # ce sont elles qui identifieront qui a fait quoi et comment le contacter 
-    git config --global user.name "John Smith"
-    git config --global user.email john@example.com
-    git config --global core.editor vim
-    git config --global alias.st status
+    $ git config --global user.name "John Smith"
+    $ git config --global user.email john@example.com
+    $ git config --global core.editor vim
+    $ git config --global alias.st status
     
     # affiche toutes les options
-    git config --list
+    $ git config --list
 
-- le flag --global enregistre les options dans le  ~/.gitconfig = valeur par défaut pour tous les nouveaux repository
-- sinon les options locals du repository se situent <repo>/.git/config
+- le flag `--global` enregistre les options dans le fichier `~/.gitconfig` : valeur par défaut pour tous les nouveaux repository
+- sinon les options locales du repository se situent `<repo>/.git/config`
 
 * Initialisation
 
-* Initialisation d'un dépôt Git (1)
+* Initialisation d'un dépôt Git
 - *init*
-    git init <path>
-- Création d'un *dépôt* *git* dans le répertoire <path>
-- Existence d'un dossier *.git* dans le répertoire <path> qui contient également les fichiers source du workspace
-    git init --bare <path>
+    $ git init <path>
+- Création d'un *dépôt* *git* dans le répertoire `<path>`
+- Existence d'un dossier *.git* dans le répertoire `<path>` qui contient également les fichiers source du workspace
+    $ git init --bare <path>
 - Création d'un *dépôt* *Git* *central*, *partagé*, *"serveur"* dans le répertoire <path>
-- Le repository serveur ne contient que le dossier .git pas les fichiers source du workspace
-- Par convention les repository serveur prennent l'extension .git : *repo.git*
+- Le repository serveur ne contient que le dossier `.git` pas les fichiers source du workspace
+- Par convention les repository serveur prennent l'extension `.git` : *repo.git*
 
-* Initialisation d'un dépôt Git (2)
+* Initialisation d'un dépôt Git
 - *clone*
     # clone le repository <repo-path> dans le répertoire <name-directory> en local
-    git clone <repo-path> <name-directory>
+    $ git clone <repo-path> <name-directory>
 
     # récupération d'un dépôt distant via ssh ou https
-    git clone ssh://<user>@<host>/path/to/repo.git
-    git clone https://otherhost.com/user/repo.git
+    $ git clone ssh://<user>@<host>/path/to/repo.git
+    $ git clone https://otherhost.com/user/repo.git
 
 * Tout ne doit pas être versionné
 - Fichier *.gitignore*
-    git ignore --help
+    $ git ignore --help
 
 - Permet de ne pas surveiller certains fichiers, dossiers
 - À la racine du dépôt (portée du dossier conteneur)
