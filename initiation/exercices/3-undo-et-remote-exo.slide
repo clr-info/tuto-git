@@ -1,0 +1,314 @@
+Git - Tuto 3
+
+Corriger l'historique - interagir avec un remote repository
+2016
+
+LPC
+
+* Tutoriel 3
+
+- Reprise du tuto 2
+
+  $ ls -a
+  ./  ../  .git/  .gitignore  notes.txt  salut.txt  toto.txt
+  
+  $ git st
+  On branch master
+  Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+          toto.txt
+  nothing added to commit but untracked files present (use "git add" to track)
+
+
+  $ git log --oneline --graph --all --decorate -7
+  *   77b2b06 (HEAD -> master) merge de la branch cordial
+  |\
+  | * 25e84f2 (cordial) formation cordiale
+  * | 232cd09 commit blabla
+  * | fe7b0aa suite de la formation
+  |/
+  * 15399c2 suite formation
+  * dc7259f (plan) PLAN - Partie 2
+  * a26f4b3 Ajout du plan - Partir 1
+
+* Nettoyer son index pour rendre ses commit atomiques
+
+- Comment retirer un fichier de l'index
+
+  $ echo 'on passe au tuto 3' >> notes.txt
+  $ echo 'Bonjour tuto 3' >> salut.txt
+  # ajoute les 2 fichiers en meme temps
+  $ git add .
+  $ git st
+  
+  # ici on se rend compte que l'on veut faire 2 commit et non un seul pour discriminer 
+  # les salutations de la partie purement tutoriel
+  # - un commit 'salutation tuto 3'
+  # - un commit 'suite tutoriel partie 3'
+  # de plus toto.txt est lui aussi indexe
+  
+Comment faire pour enlever les fichiers de l'index ?
+
+* Comment retirer un fichier de l'index
+
+  # 2 solutions possibles
+  
+  # on desindexe tout. Le WD ne change pas
+  $ git reset HEAD
+  $ git add salut.txt
+  $ git commit -m "salutation tuto 3"
+  $ git add notes.txt
+  $ git commit -m "suite tutoriel partie 3"
+
+  # on desindexe le/les fichiers qui ne nous interessent pas
+  $ git reset HEAD notes.txt toto.txt
+  $ ...
+  
+* Nettoyer son Working Directory
+
+  $ git add toto.txt
+  $ git commit -m "ajout de toto.txt"
+
+  # inattentions que l on voudra annuler
+  $ echo 'information inutile' >> notes.txt
+  $ rm toto.txt
+  $ git status
+
+Comment remettre son WD en l'état ?
+  
+  $
+  $
+  $
+  $
+  # solution possible
+  $ git checkout -- .
+
+* Revenir à une version précédente
+
+  # finalement on supprime toto.txt
+  $ rm toto.txt
+  $ git commit -am "suppression toto.txt"
+  # et on edite notes.txt
+  $ echo 'utilisation de reset et checkout' >> notes.txt
+  # coquille intentionnelle dans le message du commit
+  $ git commit -am "eeset et checkout"
+
+
+  # On nous demande alors de fournir le contenu du fichier toto.txt
+
+Comment faire pour juste consulter ce fichier `toto.txt` sans modifier l'historique ?
+
+* Revenir à une version précédente
+
+  $ git log --oneline --decorate --graph -3
+  * e12e0ca (HEAD -> master) eeset et checkout
+  * f1344e4 suppression toto.txt
+  * b25c09e ajout de toto.txt
+  
+  $ git checkout b25c09e
+  # on est dans une detached HEAD
+  $ ls
+  $ cat toto.txt
+  $ git log --oneline --decorate --graph -3
+  * b25c09e (HEAD) ajout de toto.txt
+  * 146e2f0 suite tutoriel partie 3
+  * 1fa42dc salutation tuto 3
+
+  # on revient sur notre branche master
+  $ git checkout master
+  $ git log --oneline --decorate --graph -10
+
+* Corriger son dernier commit
+
+  # petite coquille dans le dernier message de commit eeset --> reset
+  $ git log --oneline --decorate --graph -3
+  * e12e0ca (HEAD -> master) eeset et checkout
+  * f1344e4 suppression toto.txt
+  * b25c09e ajout de toto.txt
+
+Comment corriger ce message et éditer `notes.txt` ?
+
+  $
+  $
+  $ vim notes.txt
+  $ git status
+  $ git add notes.txt
+  $ git commit --amend
+  $ git log --oneline --decorate --graph -3
+  * 02d05fc (HEAD -> master) reset, checkout et amend
+  * f1344e4 suppression toto.txt
+  * b25c09e ajout de toto.txt
+  
+  # un nouveau commit 02d05fc a ete cree qui remplace e12e0ca
+
+*Manipulation*à*ne*faire*que*dans*un*repository*local*pour*un*commit*non*publié.*
+
+* remote repository
+
+.image gfx/initiation-exercice-3-repository.png
+
+Pour le moment notre repository n'a pas de connexion à un repository distant
+
+  $ git remote # ne renvoie rien
+
+On va créer un repository central sur le même disque
+
+  $ cd .. # par exemple
+  $ git init --bare central.git
+  # ce repository central ne contiendra que le dossier .git jamais d'extraction de WD
+  
+et le connecter à notre repository initial 
+
+  $ cd /notre/repository/initial
+  $ git remote add central /absolute/path/central.git
+  # la connexion au remote est bien ajoutee 
+  $ git remote -v
+
+* Communication avec le remote
+
+- *git*push:* local → distant
+On va pousser notre historique sur le remote
+
+  $ git push -u central master
+  # et verifier que l historique y est bien present
+  $ cd  /absolute/path/central.git
+  $ git log --decorate --graph --oneline
+
+`push`-u` : indique que l'on va tracker le repository central
+[[http://www.gitguys.com/topics/tracking-branches-and-remote-tracking-branches/][Tracking Branches And Remote-Tracking Branches]]
+
+  $ cd ..
+  $ git clone central.git clone-central
+  $ ls
+  central.git/  clone-central/  exo-tuto/
+  $ cd clone-central/
+  $ git remote -vv
+  # le repository remote a l origine du clone s appelle origin
+  $ git branch -vva
+
+* Communication avec le remote
+
+- *git*pull:* local ← distant
+
+*1/* Éditez le fichier `notes.txt` dans le repository `clone-central`. Commitez puis envoyer vos modifications sur le `central`.
+*2/* Éditez le fichier `salut.txt` dans votre repository `initial`. Commitez puis essayer d'envoyer vos modifications sur le `central`.
+
+_Question_2/_ : Logiquement cela n'est pas possible. Pourquoi, que se passe-t-il ? Comment faire pour résoudre le problème ? 
+
+Ce cas est compliqué, on a créé un conflit entre les 2 repository. 
+
+* Communication avec le remote
+
+- *git*pull:* local ← distant _(une_solution)_
+
+  # dans repo clone-central
+  $ echo 'je suis un clone" >> notes.txt
+  $ git commit -am "clone: commit 1"
+  $ git status
+  # git status voit que l historique local est en avance d un commit 
+  # par rapport a l historique origin central.git
+  $ git log --oneline --decorate --graph --all -5 
+  $ git push origin master
+  $ git status
+  $ git log --oneline --decorate --graph --all -5 
+ # dans repo initial
+ $ echo 'salut les clones!!!" >> salut.txt
+ $ git commit -am "repo ini: salut les clones"
+ $ git status
+ $ git log --oneline --decorate --graph --all -5
+ $ git remote -vv
+ $ git push central master
+  
+* git pull: local ← distant (une solution)
+
+_(suite)_
+
+  # pousser notre commit plante
+  $ git push central master
+ ! [rejected]        master -> master (fetch first)
+  error: failed to push some refs to '/absolute/path/central.git'
+  hint: Updates were rejected because the remote contains work that you do
+  hint: not have locally. This is usually caused by another repository pushing
+  hint: to the same ref. You may want to first integrate the remote changes
+  hint: (e.g., 'git pull ...') before pushing again.
+  hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+Le message est assez explicite ; il existe un commit dans le `remote` que nous n'avons pas en local et git refuse donc d'ajouter notre dernier commit avant une synchronisation. Il existe 2 solutions à ce niveau : 
+
+- faire un `git`pull` (qui se décopose en)
+- faire un `git`fetch` puis un `git`merge`
+
+* git pull: local ← distant (une solution)
+
+_(suite)_
+
+  # git pull = git fetch && git merge
+  $ git fetch
+  $ git log --oneline --decorate --graph --all -10 
+  # notre historique est mis a jour pour la remote branch central/master
+  # les WD et index n ont pas ete modifies
+  $ git status
+      Your branch and 'central/master' have diverged,
+      and have 1 and 1 different commit each, respectively.
+  $ git merge central/master
+  # il est possible maintenant de pusher sur le central
+  $ git status 
+  # notre historique a 2 commit d avance sur le repo central ; un commit de merge s est ajoute
+  $ git log --oneline --decorate --graph --all -10
+  $ git push central master 
+
+*Conseil*:* Avant de faire un commit sur son repository, il est préférable de faire un `fetch` pour s'assurer que rien n'a été modifié sur le repository `central`. Ou alors créer une branche que l'on mergera avec la branche principale. 
+
+* Annuler ses commit locaux
+
+Dans le clone, créez et exécutez ce code
+
+  #!/bin/bash
+  for i in {1..8}
+  do
+    echo "Je suis un clone $i" >> notes.txt
+    git commit -am "clone: bavard $i"
+  done
+
+ $ git log --oneline -10
+
+Comment faire pour supprimer ses commits maladroits que l'on ne voudra surtout pas publier ?
+
+* Annuler ses commit locaux (Solution)
+
+  $ git log --graph --oneline --decorate
+  * dce3606 (HEAD -> master) clone: bavard 8
+  * 5d908fb clone: bavard 7
+  * 5a41518 clone: bavard 6
+  * 07499e1 clone: bavard 5
+  * 586b158 clone: bavard 4
+  * da76f9c clone: bavard 3
+  * ef4555a clone: bavard 2
+  * 967cd97 clone: bavard 1
+  * 4bc7640 (origin/master, origin/HEAD) clone: commit 1
+  * 02d05fc reset, checkout et amend
+
+  $ git reset 4bc7640 --hard
+  HEAD is now at 4bc7640 clone: commit 1
+  $ git log --graph --oneline --decorate
+  # le HEAD pointe maintenant sur 4bc7640
+  # sans l'option --hard le WD et l index contiendrait encore le contenu des commit
+
+* revert
+
+Toujours dans le clone, comment faire pour récupérer le fichier `toto.txt` ?
+
+Publiez la récupération dans le repo `central` et récupérez-la dans le repo `initial`.
+
+
+_Solution_
+
+  # dans le repo clone
+  $ git revert <commit-ayant-supprime-le-fichier-toto.txt>
+  $ git log --graph --oneline --decorate --all
+  $ git push origin master
+  
+ # dans le repo initial
+ $ git pull central/master
+ $ git log --graph --oneline --decorate --all
+
