@@ -46,6 +46,28 @@ Remarques :
 - Pour ajouter un instantané dans le projet, c'est-à-dire enregistrer un ensemble de ressources indexées dans l'historique, on utilise la commande *git* *commit*
 .image gfx/initiation-repository-commit.png
 
+* Un commit
+
+- Le SHA-1 checksum d'un commit est celui du projet complet.
+- Ce SHA-1 est *l'identifiant*unique*du*commit.* Il peut être abrégé à 7 caractères.
+- 3cfa31bbcedfe40c108b49105f8f0dff36e02452 = 3cfa31b
+
+*Tagguer*un*commit*
+
+- Étiquetter un état dans l'historique (*une*version*publiée*souvent*)
+
+  $ git tag -a v1.4 -m 'my version 1.4'
+  # lister les tags
+  $ git tag
+  v0.1
+  v1.4
+
+  $ git show v1.4
+  tag v1.4
+  Tagger: Scott Chacon <schacon@gee-mail.com>
+  Date:   Mon Feb 9 14:45:11 2009 -0800
+  ...
+
 * Les 3 zones
 .image gfx/initiation-repository-les-3-etats.png
 - *git* *add* : indexer une/des ressources pour préparer le commit
