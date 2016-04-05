@@ -5,6 +5,14 @@ Git - Installation - Configuration - Initialisation
 
 LPC
 
+* Système de gestion de versions décentralisée
+
+- enregistre l'évolution d'un fichier ou d'un ensemble de fichiers au cours du temps de manière à pouvoir revenir à une version antérieure
+- travail collaboratif : qui a fait quoi, quand ?
+- décentralisé : chacun possède son dépôt local. Il peut y avoir un dépôt central.
+
+.image gfx/initiation-config-sgv.png
+
 * Installation
 
 * Installation - Windows
