@@ -164,6 +164,7 @@ Mergez la branche `plan` avec la branche principale `master`
   # notez le positionnement de HEAD
   $ echo -e "\n2/ quelques exercices" >> notes.txt
   $ git status
+  # l option -a pour un commit equivaut a faire un add
   $ git commit -am "PLAN - Partie 2"
   $ git log --graph --decorate --oneline --all
   $ git branch -v
@@ -239,6 +240,8 @@ Commitez-le
 
 * Branche et merge en 3-Way (Une solution)
 
+  # edit notes.txt dans la branch master
+  $ git commit -am "suite formation"
   # on cree la branche cordial et on y accede directement
   $ git checkout -b cordial
   $ git branch
