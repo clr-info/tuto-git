@@ -31,8 +31,8 @@ Remarques :
 
 - Pattern edit/ *stage* *(indexé)* /commit
 - Une particularité de Git
-- Zone de préparation, pas encore historisée dans le projet, entre le Working Directory et l'historique des commit
-- Permet de préparer ce que l'on veut historiser (notion d'atomicité, de cohérence des commit). Indexer une ressource c'est dire que l'on voudra historiser celle-ci
+- Zone de préparation, pas encore historisée dans le projet, entre le Working Directory et l'historique des commits
+- Permet de préparer ce que l'on veut historiser (notion d'atomicité, de cohérence des commits). Indexer une ressource c'est dire que l'on voudra historiser celle-ci
 - Ajouter un fichier (initial ou modifié) du Working directory à la zone d'index  se fait au moyen de la commande *git* *add*
 - *git*rm*file* : permet de ne plus suivre file et de le supprimer du WD 
 .image gfx/initiation-repository-stage.png
@@ -54,7 +54,7 @@ Remarques :
 
 *Tagguer*un*commit*
 
-- Étiquetter un état dans l'historique (*une*version*publiée*souvent*)
+- Étiquetter un état dans l'historique (*le*plus*souvent:*une*version*publiée*)
 
   $ git tag -a v1.4 -m 'my version 1.4'
   # lister les tags
@@ -78,12 +78,12 @@ Remarques :
 
 * Éléments liés à l'historique 
 
-- l'historique est une succession de commit où chaque commit possède un ou plusieurs parents
+- l'historique est une succession de commits où chaque commit possède un ou plusieurs parents
 - *branche* : référence sur le dernier commit d'un "contexte de développement"
 - *master* : représente la branche principale (nom donné par défaut par Git)
-- *HEAD* : référence vers le commit extrait dans le WD. Lorsque HEAD ne pointe pas sur le dernier commit d'une branche, il est dit "detached HEAD"
-- Notation HEAD~ désigne le premier parent à partir du HEAD, HEAD~2 le premier parent du premier parent...
-- idem pour master~ et master~2 mais à partir du dernier commit de la branche master
+- *HEAD* : référence vers le commit extrait dans le WD. Lorsque `HEAD` ne pointe pas sur le dernier commit d'une branche, il est dit "detached HEAD"
+- Notation: `HEAD~` désigne le premier parent à partir du `HEAD`, `HEAD~2` le premier parent du premier parent...
+- idem pour `master~` et `master~2` mais à partir du dernier commit de la branche `master`.
 
 * Représentation de l'historique 
 
@@ -92,7 +92,7 @@ Remarques :
 * Une branche
 
 - est un pointeur sur un commit
-- est une dérivation de la ligne principale de développement (test, nouvelle fonctionnalité, bugfix...)
+- est une dérivation de la ligne principale de développement (test, nouvelle fonctionnalité, bugfix, etc...)
 
   # cree une branche
   $ git branch bugfix234
@@ -129,7 +129,7 @@ Remarques :
 - Hébergé sur un serveur et partagé par une équipe. Il ne possède pas de WD.
 - Création d'un repository serveur: *git*init*--bare*
 - *git*remote*add*<name>*<url>* : connexion avec un repository distant
-- *git*remote*-v* : permet de voir ses remote repository
+- *git*remote*-v* : permet de voir ses remote repositories
 - *git*remote*rm*<name>* : permet d'effacer sa connexion avec le remote repository
 - Lors d'un *git*clone* un repository remote nommé *origin* est associé automatiquement
 
@@ -151,7 +151,7 @@ Remarques :
 * Voir les différences de fichiers entre les zones
 
 - *git* *diff* : différence entre le working directory et l'index. Ce qui n'est pas préparé à être commité
-- *git* *diff* *--cached* : différence entre l'index et le plus récent des commit. Ce qui est préparé à être commité.
+- *git* *diff* *--cached* : différence entre l'index et le plus récent des commits. Ce qui est préparé à être commité.
 - *git* *diff* *HEAD* : différence entre le working directory et le plus récent des commit
 
 - l'option `--stat` est intéressante pour voir des statistiques de modification par dossier (pratique pour voir les ajouts d'images notamment)
@@ -160,4 +160,5 @@ Remarques :
 
 - *git* *log* : liste les commit dans l'ordre chronologique avec leurs informations (Commit Hash, nom, e-mail de l'auteur, le message de commit)
 - *git* *log* *-p*: affiche les modifications associés au commit
-- *git* *log* *--oneline* : affiche seulement la première ligne des commit
+- *git* *log* *--oneline* : affiche seulement la première ligne des commits
+- *git* *log* *--oneline* *--graph* *--decorate* *--all*: affiche les lignes de filiation entre commits
