@@ -47,22 +47,22 @@ LPC
     $ git config --list
 
 - le flag `--global` enregistre les options dans le fichier `~/.gitconfig` : valeur par défaut pour tous les nouveaux repository
-- sinon les options locales du repository se situent `<repo>/.git/config`
+- sinon les options locales du repository se trouvent dans `<repo>/.git/config`
 
 * Initialisation
 
-* Initialisation d'un dépôt Git
-- *init*
+* Initialisation d'un dépôt Git: init
+
     $ git init <path>
 - Création d'un *dépôt* *git* dans le répertoire `<path>`
 - Existence d'un dossier *.git* dans le répertoire `<path>` qui contient également les fichiers source du workspace
     $ git init --bare <path>
 - Création d'un *dépôt* *Git* *central*, *partagé*, *"serveur"* dans le répertoire <path>
 - Le repository serveur ne contient que le dossier `.git` pas les fichiers source du workspace
-- Par convention les repository serveur prennent l'extension `.git` : *repo.git*
+- Par convention les repositories serveur prennent l'extension `.git` : *repo.git*
 
-* Initialisation d'un dépôt Git
-- *clone*
+* Initialisation d'un dépôt Git: clone
+
     # clone le repository <repo-path> dans le répertoire <name-directory> en local
     $ git clone <repo-path> <name-directory>
 
@@ -83,7 +83,7 @@ LPC
     # tous les fichiers et dossiers du dossier ./vendor dans le dépôt
     /vendor/*
     # les fichiers commençant par ~
-    *~
+    ~*
 
 - Attention aux fichiers *sensibles* (*conf*), inutiles (exécutables...), de tailles importante (documentation, vidéo...)
 - Pour les fichiers de conf (ou autres), il est d'usage de laisser un .dist non renseigné
