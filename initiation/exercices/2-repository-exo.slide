@@ -151,6 +151,10 @@ Puis validez les modifications par un commit dans la branche `plan`
 Validez les modifications par un commit dans la branche `plan`
 Mergez la branche `plan` avec la branche principale `master`
 
+* Branche et merge en Fast-Forward
+
+Solution (diapo suivante).
+
 * Branche et merge en Fast-Forward (Une solution)
 
   $ git branch plan
@@ -202,14 +206,14 @@ Mergez la branche `plan` avec la branche principale `master`
   Suite de la formation, tu sais faire un commit
 
 Créez une branche `cordial` et allez dans cette branche
-Remplacez les salut par des bonjour dans `notes.txt` et `salut.txt`
-Éditez `notes.txt` juste après le plan pour obtenir
+Remplacez les "salut" par des "bonjour" dans `notes.txt` et `salut.txt`
+Éditez `notes.txt` juste après le plan pour obtenir:
 
   ## Bienvenue dans cette formation Git
   Suite de la formation, vous savez faire un commit
 
-Commitez dans la branche `cordial`
-Revenez dans la branche master et éditez `notes.txt`
+Commitez dans la branche `cordial`.
+Revenez dans la branche master et éditez `notes.txt`:
 
   Suite de la formation, tu sais faire un commit
   Test d'un merge 3-Way
@@ -220,7 +224,7 @@ Revenez dans la branche master et éditez `notes.txt`
 _(suite...)_ 
 Commitez dans la branche master
 Puis mergez master avec la branche cordial
-Votre fichier `notes.txt` après merge sera 
+Votre fichier `notes.txt` après merge sera:
 
   les notes a suivre
   Bonjour les gens !!!!
@@ -236,7 +240,11 @@ Votre fichier `notes.txt` après merge sera
 
   blabla blabla blabla
 
-Commitez-le
+Commitez-le.
+
+* Branche et merge en 3-Way
+
+Solution (diapo suivante).
 
 * Branche et merge en 3-Way (Une solution)
 
@@ -314,7 +322,7 @@ Commitez-le
           toto.txt
 
 - *git*status* nous indique qu'il existe un conflit à résoudre pour `notes.txt`
-- le remplacement de salut par bonjour ne pose pas de problème (stratégie récursive de merge...)
+- le remplacement de "salut" par "bonjour" ne pose pas de problème (stratégie récursive de merge...)
 
 * Branche et merge en 3-Way
 
