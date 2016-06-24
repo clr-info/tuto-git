@@ -24,6 +24,6 @@ Tutoriel Git par le service informatique du LPC Clermont-Ferrand
 
 ## Exemple de Workflow
 
-# Références
+# Références et bibliographie
 
 http://ericsink.com/vcbe
