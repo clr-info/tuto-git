@@ -13,17 +13,7 @@ LPC
 
 .image gfx/initiation-config-sgv.png
 
-* Installation
-
-* Installation - Windows
-- TBD
-- cmder
-- git Windows
-
-* Installation - *nix
-- TBD
-
-* Installation
+* Après l'installation
 - version
     $ git --version
 
