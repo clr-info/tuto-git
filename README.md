@@ -18,6 +18,10 @@ Tutoriel Git par le service informatique du LPC Clermont-Ferrand
 - [TP 2](http://go-talks.appspot.com/github.com/clr-info/tuto-git/initiation/exercices/2-repository-exo.slide#1) : gestion d'un repository
 - [TP 3](http://go-talks.appspot.com/github.com/clr-info/tuto-git/initiation/exercices/3-undo-et-remote-exo.slide#1) : historique et remote repository
 
+## TP documentation
+
+- [TP Gitlab](http://go-talks.appspot.com/github.com/clr-info/tuto-git/initiation/exercices/gitlab/1-gitlab-pour-doc.slide#1) : gestion de la documentation
+
 # Git avancé
 
 ## Usage avancé
