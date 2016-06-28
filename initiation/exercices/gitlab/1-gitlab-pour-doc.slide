@@ -51,7 +51,7 @@ Rédiger toute la section "Linux, Mac OS X, and FreeBSD tarballs" en utilisant l
 
     $ git clone https://gitlab.in2p3.fr/clr-info/tuto-git-pour-doc.git
 
-    Username for 'https://gitlab.in2p3.fr': thomas.bellembois@clermont.in2p3.fr
+    Username for 'https://gitlab.in2p3.fr':
    
     $ cat README
 
@@ -94,6 +94,8 @@ Remarquez le rendu automatique du Markdown.
 *Le*membre*2*du*binôme.*
 
     $ git pull origin master
+    $ cd tuto-git-pour-doc/
+    $ cd binome-<nomdubinome>
     $ vim installation_Go_CentOS7.md
 
 Rédiger la partie pour récupérer et décompresser l'archive depuis "Download the archive..." jusqu'à "Installing to a custom location (non compris)".
@@ -130,6 +132,25 @@ Les deux membres du binômes ont les mêmes versions. Vous pouvez aller voir sur
 
 Un conflit survient !
 
+* Exercice 5: le conflit
+
+  $ git push origin master
+  To https://gitlab.in2p3.fr/clr-info/tuto-git-pour-doc.git
+  ! [rejected]        master -> master (fetch first)
+  error: failed to push some refs to 'https://gitlab.in2p3.fr/clr-info/tuto-git-pour-doc.git'
+  hint: Updates were rejected because the remote contains work that you do
+  hint: not have locally. This is usually caused by another repository pushing
+  hint: to the same ref. You may want to first integrate the remote changes
+  hint: (e.g., 'git pull ...') before pushing again.
+  hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+  $ git status
+  On branch master
+  Your branch and 'origin/master' have diverged,
+  and have 1 and 1 different commit each, respectively.
+    (use "git pull" to merge the remote branch into yours)
+  nothing to commit, working directory clean
+
 * Exercice 6: résolution du conflit
 
 *Le*membre*2*du*binôme.*
@@ -152,6 +173,52 @@ puis commit/push:
     $ git add installation_Go_CentOS7.md
     $ git commit -m "Résolution du conflit concernant le chemin d'installation"
     $ git push origin master
+
+* Exercice 6: résolution du conflit
+
+  $ git pull
+  Auto-merging binome-alx/installation_Go_CentOS7.md
+  CONFLICT (content): Merge conflict in binome-alx/installation_Go_CentOS7.md
+  Automatic merge failed; fix conflicts and then commit the result.
+
+  $ git status
+  On branch master
+  Your branch and 'origin/master' have diverged,
+  and have 1 and 1 different commit each, respectively.
+    (use "git pull" to merge the remote branch into yours)
+  You have unmerged paths.
+    (fix conflicts and run "git commit")
+
+  Unmerged paths:
+    (use "git add <file>..." to mark resolution)
+
+        both modified:   installation_Go_CentOS7.md
+
+  no changes added to commit (use "git add" and/or "git commit -a")
+
+* Exercice 6: résolution du conflit
+
+  $ cat installation_Go_CentOS7.md
+  # Linux, Mac OS X, and FreeBSD tarballs
+
+   Download the archive and extract it into /usr/local, creating a Go tree in /usr/local/go. For example:
+
+  <<<<<<< HEAD
+   `tar -C /usr/local/golang -xzf go$VERSION.$OS-$ARCH.tar.gz`
+  =======
+   `tar -C /usr/local/go -xzf go$VERSION.$OS-$ARCH.tar.gz`
+  >>>>>>> 276f7036a928e25912a4b4094de6dd9131793fb8
+  ... ...
+
+  $ vim installation_Go_CentOS7.md
+  $ cat installation_Go_CentOS7.md
+  ... ...
+  tar -C /usr/local/golanguage -xzf go$VERSION.$OS-$ARCH.tar.gz
+  ... ...
+
+  $ git add installation_Go_CentOS7.md
+  $ git commit -m "Résolution du conflit concernant le chemin d'installation"
+  $ git push origin master
 
 * Questions ?
 
