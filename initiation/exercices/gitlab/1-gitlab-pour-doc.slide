@@ -1,0 +1,158 @@
+Git - Écrire et gérer la documentation avec GIT et Markdown
+
+* Pourquoi utiliser Markdown pour rédiger de la documentation ?
+
+- texte brut
+- outils de rédaction multiplateforme
+- syntaxe simple
+- format générique exportable en HTML, PDF, ect...
+- format largement supporté par la communauté
+
+* Pourquoi utiliser GIT pour gérer de la documentation ?
+
+- gestion des versions
+- fonctionnalité de branches permettant de scinder le travail
+- gestion des conflits
+- rendu final immediat sous `github` ou `gitlab`
+
+démo: [[https://gitlab.in2p3.fr/clr-info/documentation/tree/master]].
+
+* Outils possibles
+
+- [[https://code.visualstudio.com/]] multiplateforme
+- linux: `vim` et le plugin [[https://github.com/plasticboy/vim-markdown]]
+
+* Syntaxe Markdown
+
+[[https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet]]
+
+[[https://learn.getgrav.org/content/markdown]]
+
+* Mise en pratique
+
+Objectif:
+
+- prise en main de la syntaxe Markdown
+- prise en main du GITLAB de l'IN2P3
+- rédaction collaborative de documentation
+- gestion de conflits de rédaction
+
+Nous allons rédiger par binôme une documentation d'installation de `Go` sous `CentOS7` avec l'aide de la documentation en ligne [[https://golang.org/doc/install#install]].
+
+Rédiger toute la section "Linux, Mac OS X, and FreeBSD tarballs" en utilisant la syntaxe Markdown.
+
+*Note*: il est préférable que chaque membre de binôme utilise son propre poste de travail.
+
+* Exercice 1 : préparation
+
+- clonage du dépôt du TP
+
+*Les*deux*membres*du*binômes.*
+
+    $ git clone https://gitlab.in2p3.fr/clr-info/tuto-git-pour-doc.git
+
+    Username for 'https://gitlab.in2p3.fr': thomas.bellembois@clermont.in2p3.fr
+   
+    $ cat README
+
+- création des répertoires de binômes
+
+*Le*membre*1*du*binôme.*
+
+    $ cd tuto-git-pour-doc/
+    $ mkdir binome-<nomdubinome>
+
+* Exercice 2 : début de rédaction
+
+*Le*membre*1*du*binôme.*
+
+    $ cd binome-<nomdubinome>/
+    $ vim installation_Go_CentOS7.md
+
+Rédiger le début du document et sauvegarder:
+
+    # Linux, Mac OS X, and FreeBSD tarballs
+
+rappel: `#` est un titre de niveau 1
+
+* Exercice 3: premier add/commit/push
+
+*Le*membre*1*du*binôme.*
+
+    $ git add installation_Go_CentOS7.md
+    $ git status
+    $ git commit -m "Premier commit de la documentation"
+    $ git remote -v
+    $ git push origin master
+    $ git branch -va
+
+Rendez vous sur GITLAB pour voir le résultat: [[https://gitlab.in2p3.fr/clr-info/tuto-git-pour-doc/tree/master]]
+Remarquez le rendu automatique du Markdown.
+
+* Exercice 4: rédaction de la documentation
+
+*Le*membre*2*du*binôme.*
+
+    $ git pull origin master
+    $ vim installation_Go_CentOS7.md
+
+Rédiger la partie pour récupérer et décompresser l'archive depuis "Download the archive..." jusqu'à "Installing to a custom location (non compris)".
+
+    $ git add installation_Go_CentOS7.md
+    $ git commit -m "Récupération et décompression de l'archive"
+    $ git push origin master
+
+*Le*membre*1*du*binôme.*
+
+    $ git pull
+
+Les deux membres du binômes ont les mêmes versions. Vous pouvez aller voir sur GITLAB le résultat.
+
+* Exercice 5: le conflit
+
+*Le*membre*1*du*binôme.*
+
+- va modifier le chemin d'installation de `/usr/local` en `/usr/local/go`.
+- puis `commit/push` ses modifications:
+
+    $ git add installation_Go_CentOS7.md
+    $ git commit -m "Modification du chemin d'installation vers /usr/local/go"
+    $ git push origin master
+
+*Le*membre*2*du*binôme.*
+
+- va modifier le chemin d'installation de `/usr/local` en `/usr/local/golang`.
+- puis tente de `commit/push` ses modifications:
+    
+    $ git add installation_Go_CentOS7.md
+    $ git commit -m "Modification du chemin d'installation vers /usr/local/golang"
+    $ git push origin master
+
+Un conflit survient !
+
+* Exercice 6: résolution du conflit
+
+*Le*membre*2*du*binôme.*
+
+- va récupérer le dernier push du membre 1 pour régler le conflit.
+
+    $ git pull
+
+    >> CONFLIT (contenu) : Conflit de fusion dans installation_Go_CentOS7.md
+
+Le fichier `installation_Go_CentOS7.md` a été modifié en fichier de merge.
+Edition du fichier et résolution du conflit à la main.
+
+Modifier la ligne de `tar` pour obtenir:
+
+    $ tar -C /usr/local/golanguage -xzf go$VERSION.$OS-$ARCH.tar.gz
+
+puis commit/push:
+
+    $ git add installation_Go_CentOS7.md
+    $ git commit -m "Résolution du conflit concernant le chemin d'installation"
+    $ git push origin master
+
+* Questions ?
+
+Merci pour votre attention.
